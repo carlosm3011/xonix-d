@@ -9,6 +9,7 @@ import std.stdio;
 import std.format;
 import std.string;
 import raylib;
+import xonix.textures;
 
 const int Width = 800;
 const int Height = 600;
@@ -22,18 +23,15 @@ class Grid {
     int stepw;
     int steph;
 
-    Image imgcyan;
-    Image imgblack;
-    Texture2D sqcyan;
-    Texture2D sqblack;
-    Texture2D sprite;
-    Texture2D t_enemy;
+    GameTextures gt;
 
     this(int ww, int wh) {
         w = ww;
         h = wh;
         stepw = cast(int) (Width / w);
         steph = cast(int) (Height / h);
+        gt = new GameTextures(stepw, steph);
+
 
         for(int j=0; j<h; j++) {
             char[] row;
@@ -52,19 +50,6 @@ class Grid {
             grid[0][i] = 'C';
             grid[h-1][i] = 'C';
         }
-
-        // generate images for cyan and black squares
-        imgcyan = GenImageColor(stepw, steph, Colors.SKYBLUE);
-        sqcyan = LoadTextureFromImage(imgcyan); 
-
-        imgblack = GenImageColor(stepw, steph, Colors.BLACK);
-        sqblack = LoadTextureFromImage(imgblack); 
-
-        Image imgred = GenImageColor(stepw, steph, Colors.RED);
-        sprite = LoadTextureFromImage(imgred); 
-
-        Image img = GenImageColor(stepw, steph, Colors.YELLOW);
-        t_enemy = LoadTextureFromImage(img); 
     }
 
     void draw() {
@@ -72,13 +57,13 @@ class Grid {
             for(int i=0; i<w; i++) {
                 // DrawText("B", stepw*i, steph*j, stepw, Colors.BLACK);
                 if (grid[j][i] == 'B') {
-                    DrawTexture(sqblack, i*stepw, j*steph, Colors.WHITE);
+                    DrawTexture(gt.get('B'), i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'C') {
-                    DrawTexture(sqcyan, i*stepw, j*steph, Colors.WHITE);
+                    DrawTexture(gt.get('C'), i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'M') {
-                    DrawTexture(sprite, i*stepw, j*steph, Colors.WHITE);
+                    DrawTexture(gt.get('M'), i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'E') {
-                    DrawTexture(t_enemy, i*stepw, j*steph, Colors.WHITE);
+                    DrawTexture(gt.get('E'), i*stepw, j*steph, Colors.WHITE);
                 }
             }
         }
