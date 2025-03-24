@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/xonix4
+xonix4.so
+xonix4.dylib
+xonix4.dll
+xonix4.a
+xonix4.lib
+xonix4-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
+*dylib
