@@ -21,6 +21,7 @@ class Mover {
     int xvel;
     Grid mygrid;
     char lastStatus;
+    char codeChar;
 
     this(int p_xpos, int p_ypos, Grid g) {
         xpos = p_xpos;
@@ -29,6 +30,7 @@ class Mover {
         yvel = 0;
         mygrid = g;
         lastStatus = mygrid.grid[ypos][xpos];
+        codeChar = 'M';
     }
 
     void update() {
@@ -61,7 +63,7 @@ class Mover {
         }
 
         lastStatus = mygrid.grid[ypos][xpos];
-        mygrid.grid[ypos][xpos] = 'M';
+        mygrid.grid[ypos][xpos] = codeChar;
     }
 
 }

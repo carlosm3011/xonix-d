@@ -27,6 +27,7 @@ class Grid {
     Texture2D sqcyan;
     Texture2D sqblack;
     Texture2D sprite;
+    Texture2D t_enemy;
 
     this(int ww, int wh) {
         w = ww;
@@ -62,6 +63,8 @@ class Grid {
         Image imgred = GenImageColor(stepw, steph, Colors.RED);
         sprite = LoadTextureFromImage(imgred); 
 
+        Image img = GenImageColor(stepw, steph, Colors.YELLOW);
+        t_enemy = LoadTextureFromImage(img); 
     }
 
     void draw() {
@@ -74,6 +77,8 @@ class Grid {
                     DrawTexture(sqcyan, i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'M') {
                     DrawTexture(sprite, i*stepw, j*steph, Colors.WHITE);
+                } else if (grid[j][i] == 'E') {
+                    DrawTexture(t_enemy, i*stepw, j*steph, Colors.WHITE);
                 }
             }
         }

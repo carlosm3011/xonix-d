@@ -19,6 +19,20 @@ class Enemy : Mover {
 
     this(int w, int h, Grid g) {
         super(w, h, g);
+        codeChar = 'E';
     }
-    
+
+    override void update() {
+
+        if (xpos == 1 || xpos >= mygrid.w-2) {
+            xvel = -xvel;
+        }
+
+        if (ypos == 1 || ypos >= mygrid.h-2) {
+            yvel = -yvel;
+        }
+
+        super.update();
+    }
+
 }
