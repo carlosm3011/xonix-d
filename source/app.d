@@ -9,6 +9,9 @@ import std.conv : to;
 import std.string;
 import raylib;
 
+import xonix.grid;
+import xonix.mover;
+
 const string VERSION="0.1";
 const string VERSION_NAME="One Night in Bangkok";	
 
@@ -24,11 +27,40 @@ void main()
     validateRaylibBinding();
     InitWindow(Width, Height, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
     SetTargetFPS(60);
+
+	// clases del juego
+	Grid mygrid = new Grid(80, 60);
+	Mover m1    = new Mover(20, 20, mygrid);
+	m1.xvel = 0;
+	m1.yvel = 0;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(Colors.RAYWHITE);
+        ClearBackground(Colors.BLACK);
         DrawText("Hello, World!", 400, 300, 28, Colors.BLACK);
+		int key;
+		while ( (key = GetKeyPressed()) != 0 ) {
+			if (key ==  KeyboardKey.KEY_DOWN) {
+				m1.yvel = 1;
+				m1.xvel = 0;
+			}
+			if (key ==  KeyboardKey.KEY_UP) {
+				m1.yvel = -1;
+				m1.xvel = 0;
+			}
+			if (key ==  KeyboardKey.KEY_LEFT) {
+				m1.xvel = -1;
+				m1.yvel = 0;
+			}
+			if (key ==  KeyboardKey.KEY_RIGHT) {
+				m1.xvel = 1;
+				m1.yvel = 0;
+			}
+
+		}
+		m1.update();
+		mygrid.draw();
         EndDrawing();
     }
     CloseWindow();	
