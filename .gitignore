@@ -15,3 +15,5 @@ xonix4-test-*
 *.obj
 *.lst
 *dylib
+raylib.dll
+raylib.lib

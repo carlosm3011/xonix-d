@@ -12,6 +12,7 @@ import raylib;
 import xonix.grid;
 import xonix.mover;
 import xonix.enemy;
+import xonix.player;
 
 const string VERSION="0.1";
 const string VERSION_NAME="One Night in Bangkok";	
@@ -31,7 +32,7 @@ void main()
 
 	// clases del juego
 	Grid mygrid = new Grid(80, 60);
-	Mover m1    = new Mover(20, 20, mygrid);
+	Player m1    = new Player(0, 20, mygrid);
 	m1.xvel = 0;
 	m1.yvel = 0;
 

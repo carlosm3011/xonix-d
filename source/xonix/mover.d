@@ -34,36 +34,7 @@ class Mover {
     }
 
     void update() {
-        mygrid.grid[ypos][xpos] = lastStatus;
-
-        xpos = xpos + xvel;
-        if (xpos <= 0 ) {
-            xvel = 0;
-            yvel = 0;
-            xpos = 0;
-        }
-
-        if (xpos >= mygrid.w-1) {
-            xvel = 0;
-            yvel = 0;
-            xpos = mygrid.w-1;
-        }        
-
-        ypos = ypos + yvel;
-        if (ypos <= 0)  {
-            xvel = 0;
-            yvel = 0;
-            ypos = 0;
-        }
-
-        if ( ypos >= mygrid.h-1) {
-            xvel = 0;
-            yvel = 0;
-            ypos = mygrid.h-1;
-        }
-
-        lastStatus = mygrid.grid[ypos][xpos];
-        mygrid.grid[ypos][xpos] = codeChar;
+        
     }
 
 }

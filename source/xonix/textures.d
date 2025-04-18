@@ -23,15 +23,24 @@ class GameTextures {
     this(int stepw, int steph) {
         // generate images for cyan and black squares
         Image img;
+
+        /* textura de los cuadrados que ya estan pintados */
         img = GenImageColor(stepw, steph, Colors.SKYBLUE);
         gt['C'] = LoadTextureFromImage(img); 
 
+        /* textura de los cuadrados blank - los que no estan pintados */
         img = GenImageColor(stepw, steph, Colors.BLACK);
         gt['B'] = LoadTextureFromImage(img); 
 
+        /* textura del jugador */
         img = GenImageColor(stepw, steph, Colors.RED);
-        gt['M'] = LoadTextureFromImage(img); 
+        gt['P'] = LoadTextureFromImage(img); 
 
+        /* textura del jugador cuando va pintando */
+        img = GenImageColor(stepw, steph, Colors.PURPLE);
+        gt['Q'] = LoadTextureFromImage(img); 
+
+        /* textura de los enemigos */
         img = GenImageColor(stepw, steph, Colors.GREEN);
         gt['E'] = LoadTextureFromImage(img); 
     }

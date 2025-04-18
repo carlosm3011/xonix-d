@@ -1,1 +1,25 @@
-{"libs" : ["raylib"], "lflags-posix" : ["-L."], "lflags-osx" : ["-rpath", "@executable_path/"], "lflags-linux" : ["-rpath=$$ORIGIN"], "description" : "A re-imagining of the 1981 XONIX DOS game", "name" : "xonix4", "dependencies" : {"raylib-d" : "~>5.5.1"}, "authors" : ["Carlos Martinez"], "copyright" : "Copyright © 2025, Carlos Martinez", "license" : "BSD-1-Clause"}
+{
+	"authors": [
+		"Carlos Martinez"
+	],
+	"copyright": "Copyright © 2025, Carlos Martinez",
+	"dependencies": {
+		"raylib-d": "~>5.5.1"
+	},
+	"description": "A re-imagining of the 1981 XONIX DOS game",
+	"lflags-linux": [
+		"-rpath=$$ORIGIN"
+	],
+	"lflags-osx": [
+		"-rpath",
+		"@executable_path/"
+	],
+	"lflags-posix": [
+		"-L."
+	],
+	"libs": [
+		"raylib"
+	],
+	"license": "BSD-1-Clause",
+	"name": "xonix4"
+}

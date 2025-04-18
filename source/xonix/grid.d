@@ -41,15 +41,23 @@ class Grid {
             grid = grid ~ row;
         }
 
+        /* relleno los bordes laterales */
         for(int j=0; j<h; j++) {
             grid[j][0] = 'C';
             grid[j][w-1] = 'C';
         }
 
+        /* relleno los bordes superior e inferior */
         for(int i=0; i<w; i++) {
             grid[0][i] = 'C';
             grid[h-1][i] = 'C';
         }
+
+        /* hago un feature en el medio */
+        for(int j=0; j < h/2 ; j++) {
+            grid[j][15] = 'C';
+            grid[j][35] = 'C';
+        }        
     }
 
     void draw() {
@@ -60,10 +68,12 @@ class Grid {
                     DrawTexture(gt.get('B'), i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'C') {
                     DrawTexture(gt.get('C'), i*stepw, j*steph, Colors.WHITE);
-                } else if (grid[j][i] == 'M') {
-                    DrawTexture(gt.get('M'), i*stepw, j*steph, Colors.WHITE);
+                } else if (grid[j][i] == 'P') {
+                    DrawTexture(gt.get('P'), i*stepw, j*steph, Colors.WHITE);
                 } else if (grid[j][i] == 'E') {
                     DrawTexture(gt.get('E'), i*stepw, j*steph, Colors.WHITE);
+                } else if (grid[j][i] == 'Q') {
+                    DrawTexture(gt.get('Q'), i*stepw, j*steph, Colors.WHITE);
                 }
             }
         }

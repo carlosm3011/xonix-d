@@ -1,0 +1,111 @@
+/**
+ * Player character
+ */
+
+module xonix.player;
+
+import std.stdio;
+import std.format;
+import std.string;
+import raylib;
+import xonix.grid;
+import xonix.mover;
+
+const int Width = 800;
+const int Height = 600;
+
+class Player : Mover {
+
+    // char codeChar1;
+    char estado;
+
+    this(int w, int h, Grid g) {
+        super(w, h, g);
+        codeChar  = 'P';
+        estado    = 'P';
+    }
+
+    override void update() {
+        // mygrid.grid[ypos][xpos] = lastStatus;
+
+        if (estado == 'P') {
+            codeChar = 'P';
+            mygrid.grid[ypos][xpos] = lastStatus;
+
+            int last_xpos = xpos;
+            xpos = xpos + xvel;
+            if (xpos <= 0 ) {
+                xvel = 0;
+                //yvel = 0;
+                xpos = 0;
+            }
+
+            if (xpos >= mygrid.w-1) {
+                xvel = 0;
+                //yvel = 0;
+                xpos = mygrid.w-1;
+            }
+
+            if (mygrid.grid[ypos][xpos] == 'C') {
+                // xpos = last_xpos;
+            } else {
+                estado = 'Q';
+            }
+
+            int last_ypos = ypos;
+            ypos = ypos + yvel;
+            if (ypos <= 0)  {
+                // xvel = 0;
+                yvel = 0;
+                ypos = 0;
+            }
+
+            if ( ypos >= mygrid.h-1) {
+                // xvel = 0;
+                yvel = 0;
+                ypos = mygrid.h-1;
+            }
+
+            if (mygrid.grid[ypos][xpos] == 'C') {
+                // ypos = last_ypos;
+            } else {
+                estado = 'Q';
+            }
+            lastStatus = mygrid.grid[ypos][xpos];
+            mygrid.grid[ypos][xpos] = codeChar;
+
+            return;
+        }
+
+        if (estado == 'Q') {
+            codeChar = 'Q';
+
+            xpos = xpos + xvel;
+            ypos = ypos + yvel;
+            if (mygrid.grid[ypos][xpos] == 'C') {
+                estado = 'P';
+                xvel = 0;
+                yvel = 0;
+                gridReplace('Q', 'C');
+            } else {
+            }
+
+            lastStatus = mygrid.grid[ypos][xpos];
+            mygrid.grid[ypos][xpos] = codeChar;
+            return;
+        }
+
+    }
+
+    /* Reemplazar un code por otro en toda la grilla */
+    void gridReplace(char org_c, char new_c) {
+        for( int j=0; j<mygrid.h; j++) {
+            for( int i=0; i<mygrid.w; i++) {
+                if (mygrid.grid[j][i] == org_c) {
+                    mygrid.grid[j][i] = new_c;
+                }
+            }
+        }
+    }
+
+}
