@@ -70,7 +70,9 @@ class Player : Mover {
                 // ypos = last_ypos;
             } else {
                 estado = 'Q';
+                codeChar = 'Q';
             }
+
             lastStatus = mygrid.grid[ypos][xpos];
             mygrid.grid[ypos][xpos] = codeChar;
 
