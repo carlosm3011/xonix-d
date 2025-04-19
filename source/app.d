@@ -14,8 +14,8 @@ import xonix.mover;
 import xonix.enemy;
 import xonix.player;
 
-const string VERSION="0.1";
-const string VERSION_NAME="One Night in Bangkok";	
+const string VERSION="0.2";
+const string VERSION_NAME="Mediodia en el Timote";	
 
 const int Width = 800;
 const int Height = 600;

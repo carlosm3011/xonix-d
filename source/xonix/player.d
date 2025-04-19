@@ -88,7 +88,41 @@ class Player : Mover {
                 estado = 'P';
                 xvel = 0;
                 yvel = 0;
-                gridReplace('Q', 'C');
+                mygrid.gridReplace('Q', 'C');
+
+                // hay que llamar al flood fill !!
+                int xvec = 0;
+                int yvec = 0;
+                // 1. buscar un vecino que este en "B"
+                if (mygrid.get(xpos+1,ypos+1) == 'B') {
+                    xvec = xpos + 1;
+                    yvec = ypos + 1;
+                } else if (mygrid.get(xpos+1,ypos) == 'B')  {
+                    xvec = xpos + 1;
+                    yvec = ypos;
+                } else if (mygrid.get(xpos,ypos-1) == 'B') {
+                    xvec = xpos;
+                    yvec = ypos-1;
+                } else if (mygrid.get(xpos,ypos+1) == 'B') {
+                    xvec = xpos;
+                    yvec = ypos+1;
+                } else if (mygrid.get(xpos-1,ypos-1) == 'B') {
+                    xvec = xpos - 1;
+                    yvec = ypos - 1;
+                } else if (mygrid.get(xpos-1,ypos) == 'B') {
+                    xvec = xpos - 1;
+                    yvec = ypos;
+                } else if (mygrid.get(xpos-1,ypos-1) == 'B') {
+                    xvec = xpos - 1;
+                    yvec = ypos - 1;
+                } else if (mygrid.get(xpos,ypos-1) == 'B') {
+                    xvec = xpos;
+                    yvec = ypos - 1;
+                } 
+
+                // 2. invocar el flood fill con ese vecino
+                mygrid.F = 1;
+                mygrid.floodFill(xvec, yvec);
             } else {
             }
 
@@ -97,17 +131,6 @@ class Player : Mover {
             return;
         }
 
-    }
-
-    /* Reemplazar un code por otro en toda la grilla */
-    void gridReplace(char org_c, char new_c) {
-        for( int j=0; j<mygrid.h; j++) {
-            for( int i=0; i<mygrid.w; i++) {
-                if (mygrid.grid[j][i] == org_c) {
-                    mygrid.grid[j][i] = new_c;
-                }
-            }
-        }
     }
 
 }
