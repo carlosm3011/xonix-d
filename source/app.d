@@ -21,6 +21,31 @@ const int Width = 800;
 const int Height = 600;
 const int HeightOffset = 50;
 
+// Estado del juego
+
+Grid mygrid;
+Player m1;
+Enemy[] enemies;
+int Score;
+
+// inicializo el juego
+void XonixInitGame() {
+	// clases del juego
+	mygrid  = new Grid(80, 60);
+	m1      = new Player(0, 20, mygrid);
+	m1.xvel = 0;
+	m1.yvel = 0;
+
+	enemies = [];
+	foreach(int n; 2..4) {
+		Enemy e = new Enemy(10*n, 15*n, mygrid);
+		e.xvel = 1;
+		e.yvel = 1;
+		enemies = enemies ~ e;
+	}
+
+}
+
 void main()
 {
 	writefln("XONIX4 - a reincarnation of the classic 1981 game.");
@@ -31,19 +56,9 @@ void main()
     InitWindow(Width, Height+HeightOffset, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
     SetTargetFPS(30);
 
-	// clases del juego
-	Grid mygrid = new Grid(80, 60);
-	Player m1    = new Player(0, 20, mygrid);
-	m1.xvel = 0;
-	m1.yvel = 0;
-
-	Enemy[] enemies;
-	foreach(int n; 2..4) {
-		Enemy e = new Enemy(10*n, 15*n, mygrid);
-		e.xvel = 1;
-		e.yvel = 1;
-		enemies = enemies ~ e;
-	}
+	// init game
+	Score = 0;
+	XonixInitGame();
 
     while (!WindowShouldClose())
     {
@@ -80,8 +95,15 @@ void main()
 		mygrid.draw();
 
 		// show stats
+		int laspct = mygrid.pct;
 		mygrid.gridStats();
-		DrawText(TextFormat("Painted surface: %03i %%", mygrid.pct), 10, Height, 30, Colors.WHITE);
+		Score = Score + (mygrid.pct-laspct)*5	;
+		DrawText(TextFormat("Painted surface: %02i %% - Score %04i", mygrid.pct, Score), 10, Height, 30, Colors.WHITE);
+
+		if (mygrid.pct >= 75) {
+			XonixInitGame();
+		}
+
         EndDrawing();
     }
     CloseWindow();	

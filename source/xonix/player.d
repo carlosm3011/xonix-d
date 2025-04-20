@@ -21,6 +21,7 @@ class Player : Mover {
     // candidate for filling
     int xfillcand;
     int yfillcand;
+    string tfillcand;
 
     this(int w, int h, Grid g) {
         super(w, h, g);
@@ -54,6 +55,9 @@ class Player : Mover {
             } else {
                 codeChar = 'Q';
                 estado = 'Q';
+                xfillcand = -1;
+                yfillcand = -1;
+                tfillcand = "NONE";
             }
 
             int last_ypos = ypos;
@@ -75,6 +79,9 @@ class Player : Mover {
             } else {
                 estado = 'Q';
                 codeChar = 'Q';
+                xfillcand = -1;
+                yfillcand = -1;
+                tfillcand = "NONE";
             }
 
             lastStatus = mygrid.grid[ypos][xpos];
@@ -88,47 +95,54 @@ class Player : Mover {
         if (estado == 'Q') {
             codeChar = 'Q';
 
+            // chequear si identificamos un punto candidato en el camino
+            // es decir uno que tenga blank N y S o W y E
+
+            // chequeo si W y E estan libres
+            if ( mygrid.get(xpos-1, ypos) == 'B' && mygrid.get(xpos+1, ypos) == 'B') {
+                // W y E libres, actualizo candidato
+                xfillcand = xpos;
+                yfillcand = ypos;
+                tfillcand = "WE";
+            }
+
+            // chequeo si N y S estan libres
+            if ( mygrid.get(xpos, ypos-1) == 'B' && mygrid.get(xpos, ypos+1) == 'B') {
+                // W y E libres, actualizo candidato
+                xfillcand = xpos;
+                yfillcand = ypos;
+                tfillcand = "NS";
+            }
+
             xpos = xpos + xvel;
             ypos = ypos + yvel;
+
             if (mygrid.grid[ypos][xpos] == 'C') {
                 estado = 'P';
                 xvel = 0;
                 yvel = 0;
                 mygrid.gridReplace('Q', 'C');
 
-                // hay que llamar al flood fill !!
-                int xvec = 0;
-                int yvec = 0;
-                // 1. buscar un vecino que este en "B"
-                if (mygrid.get(xpos+1,ypos+1) == 'B') {
-                    xvec = xpos + 1;
-                    yvec = ypos + 1;
-                } else if (mygrid.get(xpos+1,ypos) == 'B')  {
-                    xvec = xpos + 1;
-                    yvec = ypos;
-                } else if (mygrid.get(xpos,ypos-1) == 'B') {
-                    xvec = xpos;
-                    yvec = ypos-1;
-                } else if (mygrid.get(xpos,ypos+1) == 'B') {
-                    xvec = xpos;
-                    yvec = ypos+1;
-                } else if (mygrid.get(xpos-1,ypos-1) == 'B') {
-                    xvec = xpos - 1;
-                    yvec = ypos - 1;
-                } else if (mygrid.get(xpos-1,ypos) == 'B') {
-                    xvec = xpos - 1;
-                    yvec = ypos;
-                } else if (mygrid.get(xpos-1,ypos-1) == 'B') {
-                    xvec = xpos - 1;
-                    yvec = ypos - 1;
-                } else if (mygrid.get(xpos,ypos-1) == 'B') {
-                    xvec = xpos;
-                    yvec = ypos - 1;
-                } 
+                // // hay que llamar al flood fill !!
+                // 1. 
+                if (tfillcand == "WE") {
+                    mygrid.F = 1;
+                    mygrid.floodFill2(xfillcand-1, yfillcand);
+                    mygrid.gridReplace('X', 'C');
 
-                // 2. invocar el flood fill con ese vecino
-                mygrid.F = 1;
-                mygrid.floodFill(xvec, yvec);
+                    mygrid.F = 1;
+                    mygrid.floodFill2(xfillcand+1, yfillcand);
+                    mygrid.gridReplace('X', 'C');
+                } else if (tfillcand == "NS") {
+                    mygrid.F = 1;
+                    mygrid.floodFill2(xfillcand, yfillcand-1);
+                    mygrid.gridReplace('X', 'C');
+
+                    mygrid.F = 1;
+                    mygrid.floodFill2(xfillcand, yfillcand+1);
+                    mygrid.gridReplace('X', 'C');
+                }
+
             } else {
             }
 

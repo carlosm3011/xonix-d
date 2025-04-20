@@ -132,6 +132,49 @@ class Grid {
     }
     // end gridReplace
 
+    void floodFill2(int xi, int yi) {
+        writeln("%% Floodfilling2 from ", xi, " , ",yi);
+        char tmpFillChar = 'X';
+        char defFillChar = 'C';
+        char replChar    = 'B';
+
+
+        // casos base = fuera de la pantalla
+        if (xi<0 || xi>w) {
+            return;
+        }
+
+        if (yi<0 || yi>h) {
+            return;
+        }
+
+        // casos base = vengo saliendo de la recursion
+        if (F == 0) {
+            return;
+        }
+
+        // casos base = ya esta pintado con el color definitivo
+        if (get(xi,yi) == defFillChar || get(xi, yi) == tmpFillChar ) {
+            return;
+        }
+
+        // casos base = ya me encontre con el enemigo !
+        if (get(xi, yi) == 'E') {
+            F = 0;
+            writeln("%% Enemy found! Canceling flood fill at ", xi, " , ",yi);
+            gridReplace(tmpFillChar, replChar);
+            return;
+        }
+
+        set(xi, yi, tmpFillChar);
+
+        floodFill2(xi, yi-1); // north
+        floodFill2(xi, yi+1); // south
+        floodFill2(xi-1, yi); // west
+        floodFill2(xi+1, yi); // east
+
+    } // end floodfill2
+
     void floodFill(int xi, int yi) {
         writeln("%% Flood filling from ", xi, " , ",yi);
         char tmpFillChar = 'X';
