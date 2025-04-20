@@ -22,6 +22,12 @@ class Grid {
     int stepw;
     int steph;
 
+    // grid stats
+    int blanks;
+    int cyans;
+    int total;
+    int pct;
+
     // this class wide variable is the variable that 
     // controls when we are cancelling a fill
     int F;
@@ -59,6 +65,7 @@ class Grid {
         /* hago un feature en el medio */
         for(int j=0; j < h/2 ; j++) {
             grid[j][15] = 'C';
+            grid[j][34] = 'C';
             grid[j][35] = 'C';
         }        
     }
@@ -198,6 +205,21 @@ class Grid {
 
     /* Grid Stats */
     void gridStats() {
+        blanks = 0;
+        cyans  = 0;
+        total  = 0;
+        for (int j=0; j<h; j++ ) {
+            for (int i=0; i<w; i++) {
+                total++;
+                if (grid[j][i] == 'B') {
+                    blanks++;
+                } else if (grid[j][i] == 'C') {
+                    cyans++;
+                }
+            }
+        }
+
+        pct = (cyans*100/total);
 
     }
     // end grid stats

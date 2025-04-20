@@ -18,6 +18,9 @@ class Player : Mover {
 
     // char codeChar1;
     char estado;
+    // candidate for filling
+    int xfillcand;
+    int yfillcand;
 
     this(int w, int h, Grid g) {
         super(w, h, g);
@@ -49,6 +52,7 @@ class Player : Mover {
             if (mygrid.grid[ypos][xpos] == 'C') {
                 // xpos = last_xpos;
             } else {
+                codeChar = 'Q';
                 estado = 'Q';
             }
 
@@ -79,6 +83,8 @@ class Player : Mover {
             return;
         }
 
+        // en este estado es cuando voy tratando de pintar
+        // nuevas regiones
         if (estado == 'Q') {
             codeChar = 'Q';
 

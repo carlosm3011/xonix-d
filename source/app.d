@@ -19,6 +19,7 @@ const string VERSION_NAME="Mediodia en el Timote";
 
 const int Width = 800;
 const int Height = 600;
+const int HeightOffset = 50;
 
 void main()
 {
@@ -27,8 +28,8 @@ void main()
 
     // call this before using raylib
     validateRaylibBinding();
-    InitWindow(Width, Height, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
-    SetTargetFPS(60);
+    InitWindow(Width, Height+HeightOffset, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
+    SetTargetFPS(30);
 
 	// clases del juego
 	Grid mygrid = new Grid(80, 60);
@@ -77,6 +78,10 @@ void main()
 		}
 
 		mygrid.draw();
+
+		// show stats
+		mygrid.gridStats();
+		DrawText(TextFormat("Painted surface: %03i %%", mygrid.pct), 10, Height, 30, Colors.WHITE);
         EndDrawing();
     }
     CloseWindow();	

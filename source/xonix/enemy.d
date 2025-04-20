@@ -24,32 +24,24 @@ class Enemy : Mover {
 
     override void update() {
 
-        mygrid.grid[ypos][xpos] = lastStatus;
+        mygrid.set(ypos,xpos,lastStatus);
 
         xpos = xpos + xvel;
-        if (mygrid.grid[ypos][xpos] == 'C') {
+        if (mygrid.get(ypos,xpos) == 'C') {
             xpos = xpos - xvel;
             xvel = -xvel;
         }
 
         ypos = ypos + yvel;
-        if (mygrid.grid[ypos][xpos] == 'C') {
+        if (mygrid.get(ypos,xpos) == 'C') {
             ypos = ypos - yvel;
             yvel = -yvel;
         }
 
-        // if (xpos == 1 || xpos >= mygrid.w-2) {
-        //      xvel = -xvel;
-        // }
-
-        // if (ypos == 1 || ypos >= mygrid.h-2) {
-        //      yvel = -yvel;
-        // }
-
         // IMPLEMENTAR CRITERIO DE REBOTE CONTRA PARED
 
-        lastStatus = mygrid.grid[ypos][xpos];
-        mygrid.grid[ypos][xpos] = codeChar;
+        lastStatus = mygrid.get(ypos,xpos);
+        mygrid.set(ypos,xpos,codeChar);
 
         super.update();
     }
