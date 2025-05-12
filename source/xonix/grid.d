@@ -133,7 +133,7 @@ class Grid {
     // end gridReplace
 
     void floodFill2(int xi, int yi) {
-        writeln("%% Floodfilling2 from ", xi, " , ",yi);
+        // writeln("%% Floodfilling2 from ", xi, " , ",yi);
         char tmpFillChar = 'X';
         char defFillChar = 'C';
         char replChar    = 'B';

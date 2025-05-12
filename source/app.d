@@ -14,6 +14,7 @@ import xonix.grid;
 import xonix.mover;
 import xonix.enemy;
 import xonix.player;
+import xonix.gameui;
 
 const string VERSION="0.3";
 const string VERSION_NAME="Duro de la Espalda";	
@@ -33,14 +34,21 @@ Player m1;
 Enemy[] enemies;
 int nEnemies = 2;
 int Score;
+int Level = 1;
 
 enum GameScene {STARTING, PLAYING, DYING, NEWLEVEL, GAMEOVER};
 
-GameScene CurrentGameScene = GameScene.PLAYING;
+GameScene CurrentGameScene = GameScene.STARTING;
 
-/** starting **/
-void XonixStartingScene() {
-	// SceneStart = GetTime();
+void XonixStartingFrame() {
+	auto s = new GameUIScreen("Welcome To Xonix!!");
+	s.textColor = Colors.BLUE;
+	s.draw();
+
+	if (GetKeyPressed() != 0) {
+		CurrentGameScene = GameScene.PLAYING;
+	}
+
 }
 
 // inicializo el juego
@@ -100,10 +108,11 @@ void XonixGameFrame() {
 		int laspct = mygrid.pct;
 		mygrid.gridStats();
 		Score = Score + (mygrid.pct-laspct)*5	;
-		DrawText(TextFormat("Painted surface: %02i %% - Score %04i", mygrid.pct, Score), 10, Height, 30, Colors.WHITE);
+		DrawText(TextFormat("Painted surface: %02i %% - Level %02i - Score %04i", mygrid.pct, Level, Score), 10, Height, 30, Colors.WHITE);
 
 		if (mygrid.pct >= 75) {
 			nEnemies++;
+			Level++;
 			XonixInitGame();
 		}
 }
@@ -128,6 +137,10 @@ void main()
     while (!WindowShouldClose())
     {
         BeginDrawing();
+
+		if (CurrentGameScene == GameScene.STARTING) {
+			XonixStartingFrame();
+		}
 
 		if (CurrentGameScene == GameScene.PLAYING) {
 			XonixGameFrame();
