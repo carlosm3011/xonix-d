@@ -21,6 +21,7 @@ The game’s primary challenge comes from the enemies — typically bouncing bal
 
 - It is my first venture into D proper.
 - Most of it was written on board a very long flight (GRU-CDG-BKK if you are interested) without access to the Internet, just having manuals and the "Programming D" book to consult.
+- English is not my mother tongue, so you will find some comments and git commit messages in Spanish.
 
 **All comments and constructive criticism are welcome**
 
