@@ -5,6 +5,7 @@
  
 import std.stdio;
 import std.format;
+import std.random;
 import std.conv : to;
 import std.string;
 import raylib;
@@ -14,18 +15,23 @@ import xonix.mover;
 import xonix.enemy;
 import xonix.player;
 
-const string VERSION="0.2";
-const string VERSION_NAME="Mediodia en el Timote";	
+const string VERSION="0.3";
+const string VERSION_NAME="Duro de la Espalda";	
 
-const int Width = 800;
-const int Height = 600;
+const int Width   = 800;
+const int Height  = 600;
+const int GWidth  = 80;
+const int GHeight = 60;
 const int HeightOffset = 50;
+
+auto rnd = Random(43);
 
 // Estado del juego
 
 Grid mygrid;
 Player m1;
 Enemy[] enemies;
+int nEnemies = 2;
 int Score;
 
 enum GameScene {STARTING, PLAYING, DYING, NEWLEVEL, GAMEOVER};
@@ -34,22 +40,25 @@ GameScene CurrentGameScene = GameScene.PLAYING;
 
 /** starting **/
 void XonixStartingScene() {
-	SceneStart = GetTime();
+	// SceneStart = GetTime();
 }
 
 // inicializo el juego
 void XonixInitGame() {
 	// clases del juego
-	mygrid  = new Grid(80, 60);
-	m1      = new Player(0, 20, mygrid);
+	mygrid  = new Grid(GWidth, GHeight);
+	m1      = new Player(40, 0, mygrid);
 	m1.xvel = 0;
 	m1.yvel = 0;
 
 	enemies = [];
-	foreach(int n; 2..4) {
-		Enemy e = new Enemy(10*n, 15*n, mygrid);
-		e.xvel = 1;
-		e.yvel = 1;
+	foreach(int n; 2..(nEnemies+2) ) {
+		auto startx = uniform(3,GWidth-3, rnd);
+		auto starty = uniform(3,GHeight-3, rnd);
+		// Enemy e = new Enemy(10*n, 15*n, mygrid);
+		Enemy e = new Enemy(startx, starty, mygrid);
+		e.xvel = [1, -1].choice(rnd);
+		e.yvel = [1, -1].choice(rnd);
 		enemies = enemies ~ e;
 	}
 
@@ -94,6 +103,7 @@ void XonixGameFrame() {
 		DrawText(TextFormat("Painted surface: %02i %% - Score %04i", mygrid.pct, Score), 10, Height, 30, Colors.WHITE);
 
 		if (mygrid.pct >= 75) {
+			nEnemies++;
 			XonixInitGame();
 		}
 }
