@@ -28,6 +28,15 @@ Player m1;
 Enemy[] enemies;
 int Score;
 
+enum GameScene {STARTING, PLAYING, DYING, NEWLEVEL, GAMEOVER};
+
+GameScene CurrentGameScene = GameScene.PLAYING;
+
+/** starting **/
+void XonixStartingScene() {
+	SceneStart = GetTime();
+}
+
 // inicializo el juego
 void XonixInitGame() {
 	// clases del juego
@@ -46,25 +55,9 @@ void XonixInitGame() {
 
 }
 
-void main()
-{
-	writefln("XONIX4 - a reincarnation of the classic 1981 game.");
-	writefln("Version: %s, (%s)", VERSION, VERSION_NAME);
-
-    // call this before using raylib
-    validateRaylibBinding();
-    InitWindow(Width, Height+HeightOffset, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
-    SetTargetFPS(30);
-
-	// init game
-	Score = 0;
-	XonixInitGame();
-
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
+// 1 frame cycle of the Xonix Game
+void XonixGameFrame() {
         ClearBackground(Colors.BLACK);
-        DrawText("Hello, World!", 400, 300, 28, Colors.BLACK);
 		int key;
 		while ( (key = GetKeyPressed()) != 0 ) {
 			if (key ==  KeyboardKey.KEY_DOWN) {
@@ -102,6 +95,32 @@ void main()
 
 		if (mygrid.pct >= 75) {
 			XonixInitGame();
+		}
+}
+
+/**
+ * MAIN FUNCTION
+ */
+void main()
+{
+	writefln("XONIX4 - a reincarnation of the classic 1981 game.");
+	writefln("Version: %s, (%s)", VERSION, VERSION_NAME);
+
+    // call this before using raylib
+    validateRaylibBinding();
+    InitWindow(Width, Height+HeightOffset, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
+    SetTargetFPS(30);
+
+	// init game
+	Score = 0;
+	XonixInitGame();
+
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+
+		if (CurrentGameScene == GameScene.PLAYING) {
+			XonixGameFrame();
 		}
 
         EndDrawing();
