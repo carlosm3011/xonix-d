@@ -1,5 +1,7 @@
 # XONIX4 : A re-implementation of a classic 1980s game in D
 
+![Sample Xonix Game screen](img/xonix1.png)
+
 ## Why?
 
 Do I need a "Why" ? :-)
