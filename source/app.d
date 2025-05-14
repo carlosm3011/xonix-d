@@ -44,6 +44,9 @@ void XonixStartingFrame() {
 	auto s = new GameUIScreen("Welcome To Xonix!!");
 	s.textColor = Colors.BLUE;
 	s.draw();
+	if (s.y <200) {
+		s.y = s.y + 10;
+	}
 
 	if (GetKeyPressed() != 0) {
 		CurrentGameScene = GameScene.PLAYING;

@@ -25,16 +25,28 @@ class GameUIScreen {
 
     string caption;
     Color textColor;
+    Texture2D t;
+    Image img;
+    int x;
+    int y; 
 
+    // static this(string text) {
     this(string text) {
         caption = text;
-        textColor = Colors.WHITE;
+        this.textColor = Colors.WHITE;
+        this.x = 100;
+        this.y = 100;
+        this.img = LoadImage("img/xonix-ascii.png");
+        this.t = LoadTextureFromImage(img);
     }
 
     void draw() {
         uint w = roundTo!uint(Width*0.3);
         uint h = roundTo!uint(Height*0.5);
-        DrawText(toStringz(caption), 200, 400, 60, textColor);   
+
+        DrawText(toStringz(caption), 200, 400, 60, textColor);
+
+        DrawTexture(t, x, y, Colors.WHITE);
     }
 }
 
