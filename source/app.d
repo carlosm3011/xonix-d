@@ -40,12 +40,14 @@ enum GameScene {STARTING, PLAYING, DYING, NEWLEVEL, GAMEOVER};
 
 GameScene CurrentGameScene = GameScene.STARTING;
 
-void XonixStartingFrame() {
-	auto s = new GameUIScreen("Welcome To Xonix!!");
+void XonixStartingFrame(GameUIScreen s) {
 	s.textColor = Colors.BLUE;
 	s.draw();
-	if (s.y <200) {
+	if (s.y <300) {
 		s.y = s.y + 10;
+	} else {
+		s.y = 100;
+		ClearBackground(Colors.BLACK);
 	}
 
 	if (GetKeyPressed() != 0) {
@@ -133,6 +135,9 @@ void main()
     InitWindow(Width, Height+HeightOffset, toStringz(format("Xonix4 version %s (%s)", VERSION, VERSION_NAME)));
     SetTargetFPS(30);
 
+	// Starting screen
+	auto s = new GameUIScreen("Welcome To Xonix!!");
+
 	// init game
 	Score = 0;
 	XonixInitGame();
@@ -142,7 +147,7 @@ void main()
         BeginDrawing();
 
 		if (CurrentGameScene == GameScene.STARTING) {
-			XonixStartingFrame();
+			XonixStartingFrame(s);
 		}
 
 		if (CurrentGameScene == GameScene.PLAYING) {
