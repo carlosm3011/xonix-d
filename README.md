@@ -19,6 +19,10 @@ If you don't know what Xonix is, or have never heard about it, here is a short d
 
 The game’s primary challenge comes from the enemies — typically bouncing balls or similar hazards — that roam the unclaimed area. If the player is hit while drawing a line, or before closing a section, they lose a life. Strategy involves carving out small sections quickly and safely, or taking riskier moves to claim larger chunks of territory in one go. As levels progress, enemies multiply and become more aggressive, increasing the difficulty. Xonix was notable for its simple but addictive gameplay, and it spawned many clones and adaptations across various computer platforms in the 1980s and 1990s.
 
+## Target Platforms
+
+It has been tested and found to build and work properly on macOS 15+ (ARM, my primary environment) and Windows 11. I have not tried it under Linux but I see no reason why it shouldn't work. 
+
 ## Disclaimers about the Code
 
 - It is my first venture into D proper.
