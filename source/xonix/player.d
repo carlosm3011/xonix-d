@@ -11,8 +11,10 @@ import raylib;
 import xonix.grid;
 import xonix.mover;
 
-const int Width = 800;
-const int Height = 600;
+import params;
+
+//const int Width = 800;
+//const int Height = 600;
 
 class Player : Mover {
 
@@ -24,6 +26,7 @@ class Player : Mover {
     string tfillcand;
 
     this(int w, int h, Grid g) {
+
         super(w, h, g);
         codeChar  = 'P';
         estado    = 'P';

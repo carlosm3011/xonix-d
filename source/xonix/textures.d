@@ -13,8 +13,8 @@ import xonix.grid;
 import xonix.mover;
 import xonix.enemy;
 
-const int Width = 800;
-const int Height = 600;
+//const int Width = 800;
+//const int Height = 600;
 
 class GameTextures {
 

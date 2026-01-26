@@ -10,22 +10,14 @@ import std.conv : to;
 import std.string;
 import raylib;
 
+import params;
 import xonix.grid;
 import xonix.mover;
 import xonix.enemy;
 import xonix.player;
 import xonix.gameui;
 
-const string VERSION="0.3";
-const string VERSION_NAME="Duro de la Espalda";	
-
-const int Width   = 800;
-const int Height  = 600;
-const int GWidth  = 80;
-const int GHeight = 60;
-const int HeightOffset = 50;
-
-auto rnd = Random(43);
+// auto rnd = Random(42);
 
 // Estado del juego
 
@@ -36,9 +28,7 @@ int nEnemies = 2;
 int Score;
 int Level = 1;
 
-enum GameScene {STARTING, PLAYING, DYING, NEWLEVEL, GAMEOVER};
-
-GameScene CurrentGameScene = GameScene.STARTING;
+// GameScene CurrentGameScene = GameScene.STARTING;
 
 void XonixStartingFrame(GameUIScreen s) {
 	s.textColor = Colors.BLUE;
@@ -77,6 +67,31 @@ void XonixInitGame() {
 
 }
 
+void XonixRebirth() {
+	m1 			= new Player(40, 0, mygrid);
+	m1.xvel 	= 0;
+	m1.yvel		= 0;
+	// mygrid.gridReplace('Q', 'B');
+	// mygrid.gridReplace('E', 'B');
+	mygrid.gridReset();
+	Lives = Lives - 1;
+
+	writeln(">> Rebirth with nEnemies = ", nEnemies);
+	writeln(">> Rebirth with pct      = ", mygrid.pct);
+	enemies = [];
+	foreach(int n; 2..(nEnemies+2) ) {
+		//auto startx = uniform(3,GWidth-3, rnd);
+		//auto starty = uniform(3,GHeight-3, rnd);
+		//Enemy e = new Enemy(startx, starty, mygrid);
+		Enemy e = new Enemy(-1, -1, mygrid);
+		e.xvel = [1, -1].choice(rnd);
+		e.yvel = [1, -1].choice(rnd);
+		enemies = enemies ~ e;
+		writeln(">>Rebirth with enemy at ", e.xpos, ",", e.ypos);
+	}
+
+}
+
 // 1 frame cycle of the Xonix Game
 void XonixGameFrame() {
         ClearBackground(Colors.BLACK);
@@ -100,6 +115,7 @@ void XonixGameFrame() {
 			}
 
 		}
+
 		m1.update();
 
 		// Update enemies
@@ -113,7 +129,8 @@ void XonixGameFrame() {
 		int laspct = mygrid.pct;
 		mygrid.gridStats();
 		Score = Score + (mygrid.pct-laspct)*5	;
-		DrawText(TextFormat("Painted surface: %02i %% - Level %02i - Score %04i", mygrid.pct, Level, Score), 10, Height, 30, Colors.WHITE);
+		DrawText(TextFormat("Pos: (%03i, %03i) - Covered: %02i %% - Level %02i - Score %05i - Lives %02i", 
+			m1.xpos, m1.ypos, mygrid.pct, Level, Score, Lives), 10, Height, 26, Colors.WHITE);
 
 		if (mygrid.pct >= 75) {
 			nEnemies++;
@@ -136,7 +153,7 @@ void main()
     SetTargetFPS(30);
 
 	// Starting screen
-	auto s = new GameUIScreen("Welcome To Xonix!!");
+	auto s = new GameUIScreen("Press any key to start");
 
 	// init game
 	Score = 0;
@@ -152,6 +169,12 @@ void main()
 
 		if (CurrentGameScene == GameScene.PLAYING) {
 			XonixGameFrame();
+		}
+
+		if (CurrentGameScene == GameScene.DYING) {
+			writeln(">> PLAYER DIED on ",m1.xpos, ",",m1.ypos," <<\n");
+			CurrentGameScene = GameScene.PLAYING;
+			XonixRebirth();
 		}
 
         EndDrawing();

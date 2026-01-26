@@ -17,9 +17,10 @@ import std.exception;
 
 import raylib;
 import xonix.grid;
+import params;
 
-const int Width   = 800;
-const int Height  = 600;
+//const int Width   = 800;
+//const int Height  = 600;
 
 class GameUIScreen {
 
@@ -44,7 +45,7 @@ class GameUIScreen {
         uint w = roundTo!uint(Width*0.3);
         uint h = roundTo!uint(Height*0.5);
 
-        DrawText(toStringz(caption), 200, 400, 60, textColor);
+        DrawText(toStringz(caption), 30, 600-30, 60, textColor);
 
         DrawTexture(t, x, y, Colors.WHITE);
     }

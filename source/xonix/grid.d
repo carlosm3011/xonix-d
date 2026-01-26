@@ -11,8 +11,11 @@ import std.string;
 import raylib;
 import xonix.textures;
 
-const int Width = 800;
-const int Height = 600;
+import params;
+
+
+// const int Width = 800;
+// const int Height = 600;
 
 class Grid {
 
@@ -40,7 +43,9 @@ class Grid {
         stepw = cast(int) (Width / w);
         steph = cast(int) (Height / h);
         gt = new GameTextures(stepw, steph);
-
+        writeln(">>GRID CONSTRUCTION global W=", Width, " h=", Height);
+        writeln(">>GRID CONSTRUCTION size w=", w, " h=", h);
+        writeln(">>GRID CONSTRUCTION steps w=", stepw, " h=", steph);
 
         for(int j=0; j<h; j++) {
             char[] row;
@@ -62,12 +67,15 @@ class Grid {
             grid[h-1][i] = 'C';
         }
 
+        
         /* hago un feature en el medio */
+        /**
         for(int j=0; j < h/2 ; j++) {
             grid[j][15] = 'C';
             grid[j][34] = 'C';
             grid[j][35] = 'C';
-        }        
+        }  
+        **/      
     }
 
     /* devuelve el valor de la celda (x,y) de forma segura */
@@ -86,6 +94,8 @@ class Grid {
     }
     // end get
 
+    // setea valor en la grid de forma segura
+    // chequea colisiones
     void set(int x, int y, char c) {
         if ( x<0 || x>w-1 ) {
             return;
@@ -95,11 +105,20 @@ class Grid {
             return;
         }
 
+        // verificar si jugador pisa enemigo
+        if ( c == 'E') {
+            // quiero setear el jugador
+            if (grid[y][x] == 'P' || grid[y][x] == 'Q') {
+                CurrentGameScene = GameScene.DYING;
+            }
+        }
+
         grid[y][x] = c;
         return;
     }
     // end set
 
+    // Dibuja la grilla en pantalla
     void draw() {
         for(int j=0; j<h; j++) {
             for(int i=0; i<w; i++) {
@@ -132,6 +151,21 @@ class Grid {
     }
     // end gridReplace
 
+    // reemplaza todo aquello que no sea ni B ni C por B o C segun corresponda
+    // es decir, elimina los marcadores de enemigos y jugadores y los reemplaza por blanco o pared segun
+    // corresponda
+    void gridReset() {
+
+        for( int j=0; j<h; j++) {
+            for( int i=0; i<w; i++) {
+                if ( grid[j][i] != 'B' && grid[j][i] != 'C') {
+                    grid[j][i] = 'B'; // por ahora lo pongo blanco en fijo, luego hay que hacer algo mas inteligente
+                }
+            }
+        }
+
+    }
+
     void floodFill2(int xi, int yi) {
         // writeln("%% Floodfilling2 from ", xi, " , ",yi);
         char tmpFillChar = 'X';
@@ -161,7 +195,7 @@ class Grid {
         // casos base = ya me encontre con el enemigo !
         if (get(xi, yi) == 'E') {
             F = 0;
-            writeln("%% Enemy found! Canceling flood fill at ", xi, " , ",yi);
+            // writeln("%% Enemy found! Canceling flood fill at ", xi, " , ",yi);
             gridReplace(tmpFillChar, replChar);
             return;
         }

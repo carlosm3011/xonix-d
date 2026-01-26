@@ -10,8 +10,8 @@ import std.string;
 import raylib;
 import xonix.grid;
 
-const int Width = 800;
-const int Height = 600;
+// const int Width = 800;
+// const int Height = 600;
 
 class Mover {
 
