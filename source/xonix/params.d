@@ -8,7 +8,7 @@ module xonix.params;
 
 import std.random;
 
-const string VERSION="0.4b1";
+const string VERSION="0.4b2";
 const string VERSION_NAME="En la terraza";	
 
 const int Width   = 960;

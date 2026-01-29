@@ -4,7 +4,7 @@
  * Screens for when game starts, game ends, high score listing is presented
  */
 
-module xonix.gameui;
+module xonix.gamestartscreen;
 
 import std.stdio;
 import std.algorithm;
@@ -19,7 +19,7 @@ import raylib;
 import xonix.grid;
 import xonix.params;
 
-class GameUIScreen {
+class GameStartScreen {
 
     string caption;
     Color textColor;
@@ -29,8 +29,8 @@ class GameUIScreen {
     int y; 
 
     // static this(string text) {
-    this(string text) {
-        caption = text;
+    this() {
+        caption = "Press Any Key to Start!";
         this.textColor = Colors.WHITE;
         this.x = 100;
         this.y = 100;
@@ -46,6 +46,22 @@ class GameUIScreen {
 
         DrawTexture(t, x, y, Colors.WHITE);
     }
+
+    void StartScreenFrame() {
+        this.textColor = Colors.BLUE;
+        draw();
+        if (this.y <300) {
+            this.y = this.y + 10;
+        } else {
+            this.y = 100;
+            ClearBackground(Colors.BLACK);
+        }
+
+        if (GetKeyPressed() != 0) {
+            CurrentGameScene = GameScene.PLAYING;
+        }
+    }
+
 }
 
 // End gameui.d

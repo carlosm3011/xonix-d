@@ -15,29 +15,29 @@ import xonix.grid;
 import xonix.mover;
 import xonix.enemy;
 import xonix.player;
-import xonix.gameui;
 
 import xonix.gamesequence;
+import xonix.gamestartscreen;
 
 // auto rnd = Random(42);
 
 // GameScene CurrentGameScene = GameScene.STARTING;
 
-void XonixStartingFrame(GameUIScreen s) {
-	s.textColor = Colors.BLUE;
-	s.draw();
-	if (s.y <300) {
-		s.y = s.y + 10;
-	} else {
-		s.y = 100;
-		ClearBackground(Colors.BLACK);
-	}
+// void XonixStartingFrame(GameUIScreen s) {
+	// s.textColor = Colors.BLUE;
+	// s.draw();
+	// if (s.y <300) {
+	// 	s.y = s.y + 10;
+	// } else {
+	// 	s.y = 100;
+	// 	ClearBackground(Colors.BLACK);
+	// }
 
-	if (GetKeyPressed() != 0) {
-		CurrentGameScene = GameScene.PLAYING;
-	}
+	// if (GetKeyPressed() != 0) {
+	// 	CurrentGameScene = GameScene.PLAYING;
+	// }
 
-}
+//}
 
 /**
  * MAIN FUNCTION
@@ -57,19 +57,16 @@ void main()
 	GameSequence myGame = new GameSequence();
 	myGame.XonixInitGame();
 
-
 	// Starting screen
-	GameUIScreen s = new GameUIScreen("Press any key to start");
+	GameStartScreen myStartScreen = new GameStartScreen();
 
-	// init game
-	// Score = 0;
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
 
 		if (CurrentGameScene == GameScene.STARTING) {
-			XonixStartingFrame(s);
+			myStartScreen.StartScreenFrame();
 		}
 
 		if (CurrentGameScene == GameScene.PLAYING) {
