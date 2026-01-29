@@ -18,26 +18,7 @@ import xonix.player;
 
 import xonix.gamesequence;
 import xonix.gamestartscreen;
-
-// auto rnd = Random(42);
-
-// GameScene CurrentGameScene = GameScene.STARTING;
-
-// void XonixStartingFrame(GameUIScreen s) {
-	// s.textColor = Colors.BLUE;
-	// s.draw();
-	// if (s.y <300) {
-	// 	s.y = s.y + 10;
-	// } else {
-	// 	s.y = 100;
-	// 	ClearBackground(Colors.BLACK);
-	// }
-
-	// if (GetKeyPressed() != 0) {
-	// 	CurrentGameScene = GameScene.PLAYING;
-	// }
-
-//}
+import xonix.gamedyingsequence;
 
 /**
  * MAIN FUNCTION
@@ -60,6 +41,9 @@ void main()
 	// Starting screen
 	GameStartScreen myStartScreen = new GameStartScreen();
 
+	// Game dyingsequence
+	GameDyingSequence myDyingSequence = new GameDyingSequence(myGame);
+
 
     while (!WindowShouldClose())
     {
@@ -75,8 +59,9 @@ void main()
 
 		if (CurrentGameScene == GameScene.DYING) {
 			writeln(">> PLAYER DIED on ",myGame.m1.xpos, ",",myGame.m1.ypos," <<\n");
-			CurrentGameScene = GameScene.PLAYING;
-			myGame.XonixRebirth();
+			// CurrentGameScene = GameScene.PLAYING;
+			// myGame.XonixRebirth();
+			myDyingSequence.draw();
 		}
 
         EndDrawing();
