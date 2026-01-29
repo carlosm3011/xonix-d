@@ -9,13 +9,9 @@ import std.stdio;
 import std.format;
 import std.string;
 import raylib;
+
 import xonix.textures;
-
-import params;
-
-
-// const int Width = 800;
-// const int Height = 600;
+import xonix.params;
 
 class Grid {
 

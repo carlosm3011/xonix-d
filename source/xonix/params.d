@@ -4,6 +4,8 @@
  * carlos@xt6labs.io
  */
 
+module xonix.params;
+
 import std.random;
 
 const string VERSION="0.4b1";

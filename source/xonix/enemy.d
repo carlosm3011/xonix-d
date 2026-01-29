@@ -13,7 +13,7 @@ import raylib;
 import xonix.grid;
 import xonix.mover;
 
-import params;
+import xonix.params;
 
 // const int Width = 800;
 //const int Height = 600;

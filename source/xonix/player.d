@@ -11,10 +11,7 @@ import raylib;
 import xonix.grid;
 import xonix.mover;
 
-import params;
-
-//const int Width = 800;
-//const int Height = 600;
+import xonix.params;
 
 class Player : Mover {
 

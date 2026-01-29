@@ -17,10 +17,7 @@ import std.exception;
 
 import raylib;
 import xonix.grid;
-import params;
-
-//const int Width   = 800;
-//const int Height  = 600;
+import xonix.params;
 
 class GameUIScreen {
 
