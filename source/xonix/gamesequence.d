@@ -45,7 +45,7 @@ class GameSequence {
         // Level = 1;
 
         enemies = [];
-        foreach(int n; 1..(nEnemies+2) ) {
+        foreach(int n; 0..(nEnemies+2) ) {
             auto startx = uniform(3,GWidth-3, rnd);
             auto starty = uniform(3,GHeight-3, rnd);
             // Enemy e = new Enemy(10*n, 15*n, mygrid);
@@ -67,7 +67,7 @@ class GameSequence {
         writeln(">> Rebirth with nEnemies = ", nEnemies);
         writeln(">> Rebirth with pct      = ", mygrid.pct);
         enemies = [];
-        foreach(int n; 1..(nEnemies+2) ) {
+        foreach(int n; 0..(nEnemies+2) ) {
             //auto startx = uniform(3,GWidth-3, rnd);
             //auto starty = uniform(3,GHeight-3, rnd);
             //Enemy e = new Enemy(startx, starty, mygrid);
@@ -121,7 +121,7 @@ class GameSequence {
                 m1.xpos, m1.ypos, mygrid.pct, Level, Score, Lives), 10, Height, 26, Colors.WHITE);
 
             if (mygrid.pct >= 75) {
-                nEnemies = nEnemies + 1;
+                nEnemies = nEnemies + (Level % 2);
                 Level++;
                 XonixInitGame();
             }
