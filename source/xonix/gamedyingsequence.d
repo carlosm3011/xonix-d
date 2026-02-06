@@ -1,5 +1,6 @@
 /**
  * Dying sequence
+ * 2026-01-28
  */
 
 module xonix.gamedyingsequence;
